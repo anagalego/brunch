@@ -1,0 +1,219 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id                String @id @default(cuid())
+  sessionToken      String @unique
+  userId            String
+  expires           DateTime
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                String @id @default(cuid())
+  name              String?
+  email             String? @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  reservations      Reservation[]
+  restaurants       Restaurant[]
+  favourites        Favourite[]
+  collections       Collection[]
+}
+
+model VerificationToken {
+  identifier        String
+  token             String   @unique
+  expires           DateTime
+
+  @@unique([identifier, token])
+}
+
+model Picture {
+  id                String @id @default(cuid())
+  link              String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  restaurantId      String    
+  restaurant        Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+}
+
+model Reservation {
+  id                String @id @default(cuid())
+  seats             Int
+  time              String
+  name              String
+  description       String?
+  status            String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  mealTableId       String @unique
+  mealTable         MealTable @relation(fields: [mealTableId], references: [id], onDelete: Cascade)
+  userId            String
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  promotion         Promotion?
+  rate              Rate?
+}
+
+model Rate {
+  id                String @id @default(cuid())
+  content           String?
+  createdAt         DateTime @default(now())
+  best              Best?
+  top               Top?
+  reservationId     String @unique
+  reservation       Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
+
+model Best {
+  id                String @id @default(cuid())
+  service           Int
+  space             Int
+  view              Int
+  food              Int
+  variety           Int
+  price             Int
+  
+  ownerId           String @unique
+  rate              Rate? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  restaurant        Restaurant? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+}
+
+model Top {
+  id                String @id @default(cuid())
+  eggsBenedict      Int
+  ranchEggs         Int
+  pancakes          Int
+  waffles           Int
+  croissants        Int
+  scones            Int
+  bread             Int
+  granola           Int
+  smoothies         Int
+
+  ownerId           String @unique
+  rate              Rate? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  restaurant        Restaurant? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+}
+
+model MealTable {
+  id                String    @id @default(cuid())
+  outdoor           Boolean
+  seats             Int
+
+  reservation       Reservation?
+  restaurantId      String
+  restaurant        Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+}
+
+model Day {
+  id                Int @id @default(autoincrement())
+  weekday           String
+  closed            Boolean
+
+  restaurantId      String
+  restaurant        Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  open              TimeSlot[]
+}
+
+model TimeSlot {
+  id                Int @id @default(autoincrement())
+  time              String
+
+  dayId             Int
+  day               Day? @relation(fields: [dayId], references: [id], onDelete: Cascade)
+}
+
+model Restaurant {    
+  id                String @id @default(cuid()) @unique
+  slug              String @unique
+  name              String
+  description       String
+  style             String
+  categories        String?
+  city              String
+  address           String
+  zip               String
+  averagePrice      Float?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  promotion         Promotion?
+  ownerId           String
+  owner             User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  images            Picture[]
+  top               Top?
+  best              Best?
+  tables            MealTable[]
+  schedule          Day[]
+  menu              Product[]
+  favourites        Favourite[]
+}
+
+model Product {
+  id                String @id @default(cuid())
+  name              String @unique
+  description       String
+  allergens         String?
+  price             Float
+  restaurantId      String
+  restaurant        Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+}
+
+model Promotion {
+  id                String @id @default(cuid())
+  code              String @unique
+  percentage        Int
+  start             DateTime
+  end               DateTime
+  ownerId           String @unique
+  reservation       Reservation? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  restaurant        Restaurant? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+}
+
+
+model Collection {
+  id                String @id @default(cuid())
+  name              String
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  favourites        Favourite[]
+}
+
+model Favourite {
+  id                String @id @default(cuid())
+  name              String
+  restaurantId      String
+  restaurant        Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  ownerId           String
+  collection        Collection? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  user              User? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+}

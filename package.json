@@ -1,0 +1,38 @@
+{
+  "name": "brunch",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@auth/core": "0.18.1",
+    "@auth/prisma-adapter": "1.0.6",
+    "@internationalized/date": "^3.5.5",
+    "@nextui-org/accordion": "^2.0.35",
+    "@nextui-org/date-picker": "^2.1.2",
+    "@nextui-org/react": "^2.2.9",
+    "@prisma/client": "^5.13.0",
+    "@react-aria/i18n": "^3.12.1",
+    "framer-motion": "11.1.7",
+    "next": "^14.2.4",
+    "next-auth": "5.0.0-beta.3",
+    "prisma": "^5.13.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zod": "^3.23.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}

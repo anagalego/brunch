@@ -5,15 +5,14 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth"
 import RestaurantList from "@/components/restaurants/restaurant-list";
 import { fetchRestaurantByOwner } from "../../db/queries/restaurants"
-import ReservationList from "@/components/reservations/reservations-list";
-import { fetchReservationsByUserId } from "@/db/queries/reservations"; 
 
 export default async function BusinessDashBoardPage() {
     const session = await auth()
     if(!session || !session.user){
         redirect('/');
     }
-    const ownerId = session.user.id
+    const ownerId = session.user.id;
+    const restaurants = await fetchRestaurantByOwner(ownerId);
 
     return <div className="grid grid-cols-2 gap-4 p-4">
         <div className="col-span-2 shadow">
@@ -21,8 +20,9 @@ export default async function BusinessDashBoardPage() {
         </div>
         <div className="col-span-1">
             My Brunches
-            --- CORRIGIR PARA BRUNCHES COM UPDATES / ordenar por favoritos
-            <RestaurantList fetchData={() => fetchRestaurantByOwner(ownerId)}/>
+            CHANGE TO BRUNCHES WITH UPDATES <br />
+            SORT BY FAVOURITE
+            <RestaurantList restaurants={restaurants} />
             <br/>
             <Link href='/business/brunches' className='font-bold'>
                 <Chip color="success" variant="shadow">My Brunches Page</Chip>
@@ -35,11 +35,11 @@ export default async function BusinessDashBoardPage() {
         </div>
         <div className="col-span-1">
             My Reservations
-            --- CORRIGIR PARA OWNER DO RESTAURANTE
+            --- RESTAURANT RESERVATIONS FROM OWNER
             --- RESERVAS COLOCAR POR ORDEM
             {/* <ReservationList fetchData={() => fetchReservationsByUserId(ownerId)}/> */}
-            --- Página reservas está dividida por reservas novas agrupadas por restaurante;
-            --- Reservas perto da data
+            --- Reservation page is split by restaurant and sorted by new reservations;
+            --- Also priotizes reservations close to date
             <br/>
             <Link href='/business/reservations' className='font-bold'>
                 <Chip color="success" variant="shadow">My Reservations Page</Chip>

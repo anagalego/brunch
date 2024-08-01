@@ -9,6 +9,7 @@ import NewIn from "@/components/dashboard/new-in";
 
 import RestaurantList from "@/components/restaurants/restaurant-list";
 import { fetchTopRestaurant } from "@/db/queries/restaurants";
+import { Suspense } from "react";
 
 export default async function Home() {
   const restaurants = await fetchTopRestaurant();
@@ -16,7 +17,9 @@ export default async function Home() {
   return (
     <div className="grid grid-cols-3 gap-4 p-4">
       <div className="col-span-1">
-        <AvailabilitySearch/>
+        <Suspense>
+          <AvailabilitySearch/>
+        </Suspense>
       </div>
       <div className="col-span-2 grid grid-cols-2 gap-4">
         <div className="col-span-1">

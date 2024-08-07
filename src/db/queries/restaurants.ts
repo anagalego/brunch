@@ -1,6 +1,5 @@
 import type { Restaurant } from '@prisma/client' 
 import { db } from "../../db"
-import { cache } from'react'
 
 export type RestaurantWithData = Restaurant & {
     promotion?: { percentage: number } | null;

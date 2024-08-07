@@ -14,11 +14,22 @@ import {
 import { useSession } from "next-auth/react";
 import * as actions from "@/actions";
 import { useMode } from "@/providers/mode-provider";
+import { useRouter } from "next/navigation";
 
 
 export default function HeaderAuth() {
-    const mode = useMode().business ? "Particular" : "Business";
-    const linkMode = useMode().business ? "/" : "/business";
+    const { push } = useRouter();
+    const { mode, toggleMode } = useMode();
+    const modeButton = mode.business
+        ? { name: "Particular", buttonLink: "/" }
+        : { name: "Business", buttonLink: "/business" }
+
+    const handleToggleMode = () => {
+        toggleMode()
+        push(modeButton.buttonLink)
+    }
+
+
     const session = useSession();
 
 
@@ -35,9 +46,14 @@ export default function HeaderAuth() {
                     <ListboxItem
                     key="new"
                     >
-                        <Link href={linkMode} className='font-bold'>
-                            {mode}
-                        </Link>
+                        <Button
+                            onClick={handleToggleMode}
+                            type='submit'
+                            color='secondary'
+                            variant='flat'
+                        >
+                            {modeButton.name}
+                        </Button>
                     </ListboxItem>
                     <ListboxItem
                     key="new"

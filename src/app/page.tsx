@@ -12,7 +12,7 @@ import { fetchTopRestaurant } from "@/db/queries/restaurants";
 import { Suspense } from "react";
 
 export default async function Home() {
-  const restaurants = await fetchTopRestaurant();
+  //const restaurants = await fetchTopRestaurant();
 
   return (
     <div className="grid grid-cols-3 gap-4 p-4">
@@ -32,7 +32,7 @@ export default async function Home() {
         <div className="col-span-2">
           <Divider className="my-2"/>
           <h3 className="text-lg">Top</h3>
-          <RestaurantList restaurants={restaurants}/>
+          {/* <RestaurantList restaurants={restaurants}/> */}
         </div>
       </div>
     </div>

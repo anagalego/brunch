@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext } from "react";
+import { createContext, SetStateAction, useContext, useState } from "react";
 
 type Mode = {
   business: boolean
@@ -9,6 +9,11 @@ type Mode = {
       secondary: string
       background: string
   }
+}
+
+interface ModeContextProps {
+  mode: Mode;
+  toggleMode: () => void
 }
 
 const clientMode: Mode = {
@@ -29,11 +34,21 @@ const businessMode: Mode = {
   }
 }
 
-const ModeContext = createContext<Mode>(clientMode);
+const ModeContext = createContext<ModeContextProps>({
+  mode: clientMode,
+  toggleMode: () => null
+});
+
 
 export const ModeProvider = ({ children }: { children: React.ReactNode }) => {
+  const [mode, setMode] = useState(clientMode);
+
+  const toggleMode = () => {
+    setMode(mode.business ? clientMode : businessMode)
+  }
+
   return (
-    <ModeContext.Provider value={clientMode}>
+    <ModeContext.Provider value={{mode, toggleMode}}>
       {children}
     </ModeContext.Provider>
   )

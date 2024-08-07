@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={alegreya_sans_regular.className}>  
-        <div className="container mx-auto p-0">
+        <div className="container max-w-screen-lg mx-auto p-0">
           <Providers>
             <Header/>
             {children}

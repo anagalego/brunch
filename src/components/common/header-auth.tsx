@@ -6,13 +6,21 @@ import {
     Avatar,
     Popover,
     PopoverTrigger,
-    PopoverContent
+    PopoverContent,
+    Listbox,
+    ListboxItem,
+    Link
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import * as actions from "@/actions";
+import { useMode } from "@/providers/mode-provider";
+
 
 export default function HeaderAuth() {
+    const mode = useMode().business ? "Particular" : "Business";
+    const linkMode = useMode().business ? "/" : "/business";
     const session = useSession();
+
 
     let authContent: React.ReactNode;
     if(session.status === "loading") {
@@ -23,11 +31,48 @@ export default function HeaderAuth() {
                 <Avatar src={session.data?.user.image || ''}/>
             </PopoverTrigger>
             <PopoverContent>
-                <div className='p-4'>
-                    <form action={actions.signOut}>
-                        <Button type='submit'>Sign Out</Button>
-                    </form>
-                </div>
+                <Listbox variant="flat" aria-label="Listbox menu with descriptions">
+                    <ListboxItem
+                    key="new"
+                    >
+                        <Link href={linkMode} className='font-bold'>
+                            {mode}
+                        </Link>
+                    </ListboxItem>
+                    <ListboxItem
+                    key="new"
+                    description="Account Settings"
+                    >
+                        <Link href='/profile' className='font-bold'>
+                            Profile
+                        </Link>
+                    </ListboxItem>
+                    <ListboxItem
+                    key="copy"
+                    description="Reservations and Rates"
+                    >
+                        <Link href='/reservations' className='font-bold'>
+                            Reservations
+                        </Link>
+                    </ListboxItem>
+                    <ListboxItem
+                    key="edit"
+                    showDivider
+                    >
+                        <Link href='/favourites' className='font-bold'>
+                            Favourites
+                        </Link>
+                    </ListboxItem>
+                    <ListboxItem
+                    key="delete"
+                    className="text-danger"
+                    color="danger"
+                    >
+                        <form action={actions.signOut}>
+                            <Button type='submit'>Sign Out</Button>
+                        </form>
+                    </ListboxItem>
+                </Listbox>
             </PopoverContent>
         </Popover>
     } else {

@@ -20,16 +20,13 @@ export default async function Home() {
         <Suspense>
           <AvailabilitySearch/>
         </Suspense>
+        <NextReservations />
       </div>
       <div className="col-span-2 grid grid-cols-2 gap-4">
-        <div className="col-span-1">
-          <NextReservations />
-        </div>
         <div className="col-span-1">
           <PromotionsOnFavourites/>
         </div>
         <div className="col-span-2">
-          <Divider className="my-2"/>
           <NewIn/>
         </div>
         <div className="col-span-2">

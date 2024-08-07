@@ -1,3 +1,4 @@
+'use client'
 // import { Divider } from "@nextui-org/react"
 
 // import AvailabilitySearch from "@/components/dashboard/search-availability"
@@ -11,7 +12,7 @@
 // import { fetchTopRestaurant } from "@/db/queries/restaurants";
 // import { Suspense } from "react";
 
-export default async function Home() {
+export default function Home() {
   //const restaurants = await fetchTopRestaurant();
 
   return (

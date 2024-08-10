@@ -6,7 +6,7 @@ import { fetchRestaurantById, RestaurantWithData } from '@/db/queries/restaurant
 export default async function FavouritesPage() {
     const session = await auth();
     if(!session || !session.user) {
-        return <div className="flex flex-row flex-wrap gap-2">
+        return <div>
             <h1>No Favourites.</h1>
         </div>
     } else {
@@ -26,7 +26,7 @@ export default async function FavouritesPage() {
                 </div>
             )
         });
-        return <div className="flex flex-row flex-wrap gap-2">
+        return <div>
             <h1>Your Favourites:</h1>
             {renderedFavourites}
         </div>

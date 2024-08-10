@@ -9,22 +9,17 @@ import { db } from "../db";
 import paths from "../paths";
 
 export async function addFavourite(restaurantId: string) {
-    console.log('adding...')
     const session = await auth();
     if(!session || !session.user) {
         return {
-            errors: {
-                _form: ['You must sign in to do this.']
-            },
+            errors: 'You must sign in to do this.'
         }
     } else {
         const restaurant = await fetchRestaurantById(restaurantId)
 
         if(!restaurant) {
             return {
-                errors: {
-                    _form: ['Can not find restaurant.']
-                }
+                errors: 'Can not find restaurant.'
             }
         }
 
@@ -40,11 +35,10 @@ export async function addFavourite(restaurantId: string) {
             console.log('Favourite created')
         } catch (err: unknown) {
             if (err instanceof Error) {
-                console.log('Error 1')
+                console.log('adding...', restaurant.id, session.user.id)
+                console.log('Error 1:', err.message)
                 return {
-                    errors: {
-                        _form: [err.message]
-                    }
+                    errors: err.message
                 }
             } else {
                 console.log('Error 2')

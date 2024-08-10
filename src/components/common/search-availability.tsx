@@ -34,8 +34,7 @@ export default function AvailabilitySearch() {
     return (
         <>
             <form>
-                <div className="grid grid-cols-2 gap-4">
-                    <h3 className="text-lg">Your next reservation</h3>
+                <div className="grid grid-cols-2 gap-4 mt-4 mb-4">
                     <div className="col-span-2">
                         <DatePicker
                             name="date"
@@ -71,9 +70,22 @@ export default function AvailabilitySearch() {
                         />
                     </div>
                 </div>
-            </form>         
-            <Button onClick={handleClear} type="button">Clear</Button>  
-            <FiltersForm/>
+            </form>  
+            
+            <div className="grid grid-cols-2 gap-4 mt-4 mb-4">
+                <div className="col-span-1">   
+                    <Button
+                        fullWidth
+                        onClick={handleClear}
+                        type="button"
+                    >
+                        Clear All
+                    </Button> 
+                </div> 
+                <div className="col-span-1">
+                    <FiltersForm/>
+                </div> 
+            </div>    
         </>
     );
 }

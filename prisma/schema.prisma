@@ -45,7 +45,7 @@ model User {
   reservations      Reservation[]
   restaurants       Restaurant[]
   favourites        Favourite[]
-  collections       Collection[]
+  //collections       Collection[]
 }
 
 model VerificationToken {
@@ -200,21 +200,21 @@ model Promotion {
 }
 
 
-model Collection {
-  id                String @id @default(cuid())
-  name              String
-  userId            String
-  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  favourites        Favourite[]
-}
+// model Collection {
+//   id                String @id @default(cuid())
+//   name              String
+//   userId            String
+//   user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   favourites        Favourite[]
+// }
 
 model Favourite {
   id                String @id @default(cuid())
   restaurantId      String
   restaurant        Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   ownerId           String
-  collection        Collection? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  user              User? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  user              User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  //collection        Collection? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 }
 
 

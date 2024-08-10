@@ -11,7 +11,8 @@ import {
     useDisclosure,
     Checkbox,
     Input,
-    Link
+    Link,
+    Slider
 } from "@nextui-org/react";
 import { styles } from "@/styles";
 import { best } from "@/best";
@@ -23,7 +24,7 @@ export default function FiltersForm() {
 
   return (
     <>
-      <Button onPress={onOpen} color="primary">More Filters</Button>
+      <Button fullWidth onPress={onOpen} color="primary">More Filters</Button>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
@@ -48,6 +49,14 @@ export default function FiltersForm() {
                   type="password"
                   variant="bordered"
                 />
+                <Slider 
+                  label="Average price" 
+                  step={1} 
+                  maxValue={100} 
+                  minValue={5} 
+                  defaultValue={15}
+                  className="max-w-md"
+                />
                 <FilterCheckboxGroup filterValues={styles} filterKey="style"/>
                 <FilterCheckboxGroup filterValues={best} filterKey="best"/>
                 <FilterCheckboxGroup filterValues={top} filterKey="top"/>
@@ -57,7 +66,7 @@ export default function FiltersForm() {
                   Close
                 </Button>
                 <Button color="primary" onPress={onClose}>
-                  Sign in
+                  Search
                 </Button>
               </ModalFooter>
             </>

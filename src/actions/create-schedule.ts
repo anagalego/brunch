@@ -17,15 +17,11 @@ export async function createSchedule(restaurantId: string) {
     } catch (err: unknown) {
         if (err instanceof Error) {
             return {
-                errors: {
-                    _form: [err.message]
-                }
+                errors: err.message                
             }
         } else {
             return {
-                errors: {
-                    _form: ['Something went wrong.']
-                }
+                errors: 'Something went wrong.'
             }
         }
     }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import paths from "@/paths";
 import RestaurantElement from "../restaurants/restaurant-element"
 import type { RestaurantWithData } from "../../db/queries/restaurants"
+import Favorite from "../common/favorite-toggle";
 
 
 interface RestaurantListProps {
@@ -22,6 +23,7 @@ export default async function RestaurantList({ restaurants }: RestaurantListProp
                         promotion={promo}
                     />
                 </Link>
+                <Favorite restaurant={restaurant}/>
             </div>
         )
     });

@@ -1,8 +1,3 @@
-import Link from "next/link";
-import { db } from "@/db";
-import paths from "@/paths"
-import { auth } from "@/auth";
-import { fetchRestaurantById }  from "../../db/queries/restaurants"
 import { Restaurant } from "@prisma/client";
 
 interface RestaurantElementProps {

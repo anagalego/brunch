@@ -1,8 +1,5 @@
 'use server'
 
-//The Big Brunch Theory
-//Neste fantástico brunch podes encontrar desde os pratos mais tradicionais às receitas mais loucas. Temos menu para vegetarianos, celíacos e diabéticos. Podes trazer o teu gato ou cão. Estamos à tua espera!
-
 import type { Restaurant } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -39,18 +36,10 @@ const createRestaurantSchema = z.object({
         message: 'Only between 5 and 50 characters or numbers.'
         }),
     averagePrice: z.preprocess((x) => Number(x), z.number().gt(1, {
-        message:'Too cheap to be true...'
+        message:'Place a number between 5-100'
         }).lt(100, {
-            message: 'This platform is not for you... Btw do you need a chef!?'
+            message: 'Number between 5-100'
         }).positive())
-    // image: z.string().min(25).regex(/[https://images.unsplash.com/photo-][A-Za-z.\s_-]+/, {
-    //     message: 'Valid image urls only, please!'
-    //     }),
-    // capacity: z.preprocess((x) => Number(x), z.number().gt(8, {
-    //     message:'Are you that exclusive?'
-    //     }).lt(80, {
-    //         message: 'Is this a school cafeteria?'
-    //     }).int().positive()),
 })
 
 interface CreateRestaurantFormState {
@@ -80,8 +69,6 @@ export async function createRestaurant(
         address: formData.get('address'),
         zip: formData.get('zip'),
         averagePrice: formData.get('averagePrice')
-        //capacity: formData.get('capacity')
-        //image: formData.get('image')
     });
 
     if(!result.success) {

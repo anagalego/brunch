@@ -8,4 +8,5 @@ export { createMealTable } from "./create-meal-table";
 export { createReservation } from "./create-reservation";
 export { createProduct } from "./create-product";   
 export { createPromotion } from "./create-promotion";   
+export { addFavourite } from "./add-favourite"
 

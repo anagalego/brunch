@@ -2,10 +2,11 @@
 
 import { Button, Input, Select, Selection, SelectItem } from "@nextui-org/react";
 import { DatePicker } from "@nextui-org/date-picker";
-import { times } from "../schedule/schedule-create-form";
+import { times } from "@/times";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { DateValue } from "@internationalized/date";
 import { useState } from "react";
+import FiltersForm from "../common/filters-dialog";
 
 export default function AvailabilitySearch() {
     const searchParams = useSearchParams();
@@ -70,9 +71,9 @@ export default function AvailabilitySearch() {
                         />
                     </div>
                 </div>
-            </form>  
-            
+            </form>         
             <Button onClick={handleClear} type="button">Clear</Button>  
+            <FiltersForm/>
         </>
     );
 }
